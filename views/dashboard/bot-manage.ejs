@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2><%= bot.name %></h2>
+      <span class="status-pill status-<%= bot.status %>"><%= bot.status %></span>
+    </div>
+
+    <form class="form-card" action="/dashboard/bots/<%= bot._id %>" method="POST">
+      <div class="field"><label>Kisa Aciklama</label><input type="text" name="shortDescription" value="<%= bot.shortDescription %>" /></div>
+      <div class="field"><label>Detayli Aciklama</label><textarea name="longDescription" rows="5"><%= bot.longDescription %></textarea></div>
+      <div class="field"><label>Prefix</label><input type="text" name="prefix" value="<%= bot.prefix %>" /></div>
+      <div class="field"><label>Davet Linki</label><input type="url" name="inviteUrl" value="<%= bot.inviteUrl %>" /></div>
+      <div class="field"><label>Website</label><input type="url" name="website" value="<%= bot.website || '' %>" /></div>
+      <div class="field"><label>Destek Sunucusu</label><input type="url" name="supportServer" value="<%= bot.supportServer || '' %>" /></div>
+      <div class="field"><label>GitHub</label><input type="url" name="github" value="<%= bot.github || '' %>" /></div>
+      <button class="btn btn-primary btn-block" type="submit">Degisiklikleri Kaydet</button>
+    </form>
+
+    <h3 style="margin:28px 0 12px;">Istatistikler</h3>
+    <div class="stat-grid">
+      <div class="stat-card"><span>Toplam Oy</span><strong><%= bot.voteCount %></strong></div>
+      <div class="stat-card"><span>Sunucu</span><strong><%= bot.serverCount %></strong></div>
+      <div class="stat-card"><span>Goruntulenme</span><strong><%= bot.viewCount %></strong></div>
+      <div class="stat-card"><span>Puan</span><strong><%= bot.ratingAverage %> / 5</strong></div>
+    </div>
+
+    <h3 style="margin:28px 0 12px;">Yorumlar</h3>
+    <% reviews.forEach(review => { %>
+      <div class="review-item">
+        <div class="review-head">
+          <strong><%= review.user ? review.user.username : 'Kullanici' %></strong>
+          <span class="stars"><%= '★'.repeat(review.rating) %></span>
+        </div>
+        <p><%= review.comment %></p>
+      </div>
+    <% }) %>
+
+    <form action="/dashboard/bots/<%= bot._id %>/delete" method="POST" style="margin-top:24px;" onsubmit="return confirm('Bu botu silmek istediginden emin misin?');">
+      <button class="btn btn-danger" type="submit">Botu Sil</button>
+    </form>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

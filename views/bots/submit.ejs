@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Bot Ekle</h2></div>
+    <form class="form-card" action="/bots/submit" method="POST">
+      <% if (errors && errors.length > 0) { %>
+        <div class="form-errors">
+          Formu kontrol et:
+          <ul><% errors.forEach(e => { %><li><%= e.msg %></li><% }) %></ul>
+        </div>
+      <% } %>
+
+      <div class="field">
+        <label>Bot ID</label>
+        <input type="text" name="botId" required value="<%= formData ? formData.botId : '' %>" />
+        <div class="field-hint">Discord Developer Portal'daki uygulama ID'si.</div>
+      </div>
+      <div class="field">
+        <label>Bot Adi</label>
+        <input type="text" name="name" required value="<%= formData ? formData.name : '' %>" />
+      </div>
+      <div class="field">
+        <label>Kisa Aciklama</label>
+        <input type="text" name="shortDescription" maxlength="200" required value="<%= formData ? formData.shortDescription : '' %>" />
+      </div>
+      <div class="field">
+        <label>Detayli Aciklama</label>
+        <textarea name="longDescription" rows="6" required><%= formData ? formData.longDescription : '' %></textarea>
+      </div>
+      <div class="field">
+        <label>Kategori</label>
+        <select name="category" required>
+          <% categories.forEach(cat => { %><option value="<%= cat._id %>"><%= cat.name %></option><% }) %>
+        </select>
+      </div>
+      <div class="field">
+        <label>Etiketler</label>
+        <select name="tags" multiple size="5">
+          <% tags.forEach(tag => { %><option value="<%= tag._id %>"><%= tag.name %></option><% }) %>
+        </select>
+        <div class="field-hint">En fazla 5 etiket sec.</div>
+      </div>
+      <div class="field">
+        <label>Prefix</label>
+        <input type="text" name="prefix" placeholder="/" />
+      </div>
+      <div class="field">
+        <label>Davet Linki</label>
+        <input type="url" name="inviteUrl" required />
+      </div>
+      <div class="field">
+        <label>Website (opsiyonel)</label>
+        <input type="url" name="website" />
+      </div>
+      <div class="field">
+        <label>Destek Sunucusu (opsiyonel)</label>
+        <input type="url" name="supportServer" />
+      </div>
+      <div class="field">
+        <label>GitHub (opsiyonel)</label>
+        <input type="url" name="github" />
+      </div>
+      <div class="field">
+        <label>Ozellikler</label>
+        <input type="text" name="features" placeholder="moderasyon, muzik, seviye sistemi" />
+        <div class="field-hint">Virgul ile ayirarak yaz.</div>
+      </div>
+      <div class="field field-checkbox">
+        <input type="checkbox" name="nsfw" id="nsfw" />
+        <label for="nsfw" style="margin:0;">Bu bot NSFW icerik barindiriyor</label>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit">Botu Gonder</button>
+    </form>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "site": {
+    "name": "BotHub",
+    "description": "Discord botlarını keşfet, ekle ve oy ver.",
+    "url": "http://localhost:3000",
+    "supportServer": "",
+    "maintenanceMode": false
+  },
+  "bot": {
+    "token": "",
+    "clientId": "",
+    "clientSecret": ""
+  },
+  "website": {
+    "port": 3000,
+    "url": "http://localhost:3000",
+    "trustProxy": false
+  },
+  "discord": {
+    "guildId": "",
+    "redirectUri": "http://localhost:3000/auth/discord/callback",
+    "adminIds": []
+  },
+  "database": {
+    "type": "mongodb",
+    "url": "mongodb://127.0.0.1:27017/botlist"
+  },
+  "security": {
+    "sessionSecret": "change-this-session-secret",
+    "cookieSecure": false,
+    "cookieMaxAgeDays": 7
+  },
+  "vote": {
+    "cooldown": 43200
+  },
+  "limits": {
+    "botsPerUser": 15,
+    "reviewMaxLength": 600,
+    "reviewCommentEditWindowMinutes": 30,
+    "reportMaxLength": 500,
+    "tagsPerBot": 5,
+    "apiRateLimitPerMinute": 60,
+    "webRateLimitPerMinute": 120,
+    "paginationDefaultSize": 20,
+    "paginationMaxSize": 50
+  }
+}

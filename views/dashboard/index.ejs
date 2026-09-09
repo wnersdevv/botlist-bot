@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Panelim</h2>
+      <a class="btn btn-primary btn-sm" href="/bots/submit">Yeni Bot Ekle</a>
+    </div>
+    <% if (bots.length === 0) { %>
+      <div class="empty-state">Henuz bir bot eklemedin.</div>
+    <% } else { %>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Bot</th><th>Kategori</th><th>Durum</th><th>Oy</th><th></th></tr></thead>
+          <tbody>
+          <% bots.forEach(bot => { %>
+            <tr>
+              <td><%= bot.name %></td>
+              <td><%= bot.category ? bot.category.name : '-' %></td>
+              <td><span class="status-pill status-<%= bot.status %>"><%= bot.status %></span></td>
+              <td><%= bot.voteCount %></td>
+              <td><a href="/dashboard/bots/<%= bot._id %>" style="color:var(--accent);">Yonet</a></td>
+            </tr>
+          <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<% if (meta && meta.totalPages > 1) { %>
+<div class="pagination">
+  <% for (let p = 1; p <= meta.totalPages; p++) { %>
+    <% if (p === meta.page) { %>
+      <span class="current"><%= p %></span>
+    <% } else { %>
+      <a href="?<%= new URLSearchParams(Object.assign({}, query, { page: p })).toString() %>"><%= p %></a>
+    <% } %>
+  <% } %>
+</div>
+<% } %>

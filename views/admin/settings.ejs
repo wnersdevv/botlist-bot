@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Site Ayarlari</h2></div>
+    <form class="form-card" action="/admin/settings" method="POST">
+      <div class="field"><label>Site Adi</label><input type="text" name="siteName" value="<%= config.site.name %>" /></div>
+      <div class="field"><label>Site Aciklamasi</label><input type="text" name="siteDescription" value="<%= config.site.description %>" /></div>
+      <div class="field"><label>Oy Bekleme Suresi (saniye)</label><input type="number" name="voteCooldown" value="<%= config.vote.cooldown %>" /></div>
+      <div class="field field-checkbox">
+        <input type="checkbox" name="maintenanceMode" id="mm" <%= config.site.maintenanceMode ? 'checked' : '' %> />
+        <label for="mm" style="margin:0;">Bakim modunu ac</label>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Ayarlari Kaydet</button>
+    </form>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+
+<div class="container bot-header">
+  <img class="avatar-lg" src="<%= bot.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png' %>" alt="" />
+  <div>
+    <h1><%= bot.name %><% if (bot.verified) { %><span class="badge-verified">✓ Dogrulanmis</span><% } %></h1>
+    <p><%= bot.shortDescription %></p>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:10px;">
+    <a class="btn btn-primary" href="<%= bot.inviteUrl %>" target="_blank" rel="noopener">Sunucuna Ekle</a>
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <button class="btn btn-outline" data-vote-bot="<%= bot.botId %>">Oy Ver (<span data-vote-count="<%= bot.botId %>"><%= bot.voteCount %></span>)</button>
+      <button class="btn btn-outline" data-favorite-bot="<%= bot.botId %>">Favorile</button>
+    <% } else { %>
+      <a class="btn btn-outline" href="/auth/discord">Oy vermek icin giris yap</a>
+    <% } %>
+  </div>
+</div>
+
+<div class="container detail-grid">
+  <div>
+    <h3 style="margin-bottom:12px;">Aciklama</h3>
+    <p style="color:var(--text);white-space:pre-line;"><%= bot.longDescription %></p>
+
+    <h3 style="margin:28px 0 12px;">Yorumlar (<%= bot.ratingCount %>)</h3>
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <form data-async-form data-success-message="Yorumun kaydedildi." data-reload="true" action="/bot/<%= bot.botId %>/reviews" method="POST" class="form-card" style="padding:16px;margin-bottom:18px;">
+        <div class="field">
+          <label>Puan (1-5)</label>
+          <input type="number" name="rating" min="1" max="5" required />
+        </div>
+        <div class="field">
+          <label>Yorumun</label>
+          <textarea name="comment" rows="3" maxlength="600" required></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Yorumu Gonder</button>
+      </form>
+    <% } %>
+    <% if (reviews.length === 0) { %>
+      <div class="empty-state">Henuz yorum yapilmamis.</div>
+    <% } %>
+    <% reviews.forEach(review => { %>
+      <div class="review-item">
+        <div class="review-head">
+          <strong><%= review.user ? review.user.username : 'Kullanici' %></strong>
+          <span class="stars"><%= '★'.repeat(review.rating) %><%= '☆'.repeat(5 - review.rating) %></span>
+        </div>
+        <p><%= review.comment %></p>
+      </div>
+    <% }) %>
+  </div>
+
+  <div>
+    <div class="info-row"><span>Sunucu</span><span><%= bot.serverCount %></span></div>
+    <div class="info-row"><span>Kategori</span><span><%= bot.category ? bot.category.name : '-' %></span></div>
+    <div class="info-row"><span>Prefix</span><span><%= bot.prefix %></span></div>
+    <div class="info-row"><span>Dil</span><span><%= bot.language %></span></div>
+    <% if (bot.website) { %><div class="info-row"><span>Website</span><span><a href="<%= bot.website %>" target="_blank">Ac</a></span></div><% } %>
+    <% if (bot.supportServer) { %><div class="info-row"><span>Destek Sunucusu</span><span><a href="<%= bot.supportServer %>" target="_blank">Ac</a></span></div><% } %>
+    <% if (bot.github) { %><div class="info-row"><span>GitHub</span><span><a href="<%= bot.github %>" target="_blank">Ac</a></span></div><% } %>
+
+    <h3 style="margin:20px 0 10px;font-size:15px;">Etiketler</h3>
+    <div class="category-pills">
+      <% (bot.tags || []).forEach(tag => { %><span class="category-pill"><%= tag.name %></span><% }) %>
+    </div>
+
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <form data-async-form data-success-message="Rapor gonderildi." action="/bot/<%= bot.botId %>/reports" method="POST" style="margin-top:24px;">
+        <div class="field">
+          <label>Bu Botu Rapor Et</label>
+          <select name="reason">
+            <option value="fake">Sahte bot</option>
+            <option value="malicious">Zararlı bot</option>
+            <option value="spam">Spam</option>
+            <option value="misinformation">Yanlis bilgi</option>
+            <option value="inappropriate">Uygunsuz icerik</option>
+            <option value="offline">Calismiyor</option>
+            <option value="other">Diger</option>
+          </select>
+        </div>
+        <div class="field">
+          <textarea name="details" rows="2" maxlength="500" placeholder="Detay (opsiyonel)"></textarea>
+        </div>
+        <button class="btn btn-outline btn-block" type="submit">Rapor Gonder</button>
+      </form>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

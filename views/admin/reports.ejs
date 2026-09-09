@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Raporlar</h2>
+      <div style="display:flex;gap:12px;">
+        <a href="/admin/reports?status=open">Acik</a>
+        <a href="/admin/reports?status=reviewing">Inceleniyor</a>
+        <a href="/admin/reports?status=resolved">Cozuldu</a>
+        <a href="/admin/reports?status=dismissed">Reddedildi</a>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bot</th><th>Bildiren</th><th>Neden</th><th>Detay</th><th>Islem</th></tr></thead>
+        <tbody>
+        <% reports.forEach(r => { %>
+          <tr>
+            <td><%= r.bot ? r.bot.name : '-' %></td>
+            <td><%= r.reporter ? r.reporter.username : '-' %></td>
+            <td><%= r.reason %></td>
+            <td><%= r.details || '-' %></td>
+            <td>
+              <form action="/admin/reports/<%= r._id %>/resolve" method="POST" style="display:flex;gap:6px;">
+                <select name="status">
+                  <option value="reviewing">Inceleniyor</option>
+                  <option value="resolved">Cozuldu</option>
+                  <option value="dismissed">Reddet</option>
+                </select>
+                <button class="btn btn-sm btn-outline" type="submit">Guncelle</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <%- include('../partials/pagination', { meta, query: { status } }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

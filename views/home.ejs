@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('partials/head') %></head>
+<body>
+<%- include('partials/nav') %>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <h1>Discord botunu bulunacagi yer.</h1>
+    <p class="lead"><%= site.description %></p>
+    <form class="search-bar" action="/bots/search" method="GET">
+      <input type="text" name="q" placeholder="Bot adi, kategori veya ozellik ara..." />
+      <button class="btn btn-primary" type="submit">Ara</button>
+    </form>
+    <div class="hero-stats">
+      <div><strong><%= stats.approvedBots %></strong><span>Onayli Bot</span></div>
+      <div><strong><%= stats.totalUsers %></strong><span>Kullanici</span></div>
+      <div><strong><%= stats.totalVotes %></strong><span>Toplam Oy</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Kategoriler</h2></div>
+    <div class="category-pills">
+      <% categories.forEach(cat => { %>
+        <a class="category-pill" href="/bots?category=<%= cat._id %>"><%= cat.name %></a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>En Cok Oy Alanlar</h2><a href="/bots/top">Tumunu gor</a></div>
+    <div class="bot-grid">
+      <% popular.forEach(bot => { %><%- include('partials/bot-card', { bot }) %><% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Yukselen Botlar</h2><a href="/bots/trending">Tumunu gor</a></div>
+    <div class="bot-grid">
+      <% trending.forEach(bot => { %><%- include('partials/bot-card', { bot }) %><% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Yeni Eklenenler</h2><a href="/bots/new">Tumunu gor</a></div>
+    <div class="bot-grid">
+      <% newest.forEach(bot => { %><%- include('partials/bot-card', { bot }) %><% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+</body>
+</html>

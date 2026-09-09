@@ -1,0 +1,15 @@
+<div class="bot-card">
+  <div class="bot-card-top">
+    <img class="bot-avatar" src="<%= bot.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png' %>" alt="" />
+    <div>
+      <div class="bot-name"><%= bot.name %><% if (bot.verified) { %><span class="badge-verified">✓</span><% } %></div>
+      <div class="bot-category"><%= bot.category ? bot.category.name : '' %></div>
+    </div>
+  </div>
+  <p class="bot-desc"><%= bot.shortDescription %></p>
+  <div class="bot-meta">
+    <span>Oy: <strong data-vote-count="<%= bot.botId %>"><%= bot.voteCount %></strong></span>
+    <span>Sunucu: <strong><%= bot.serverCount %></strong></span>
+    <a href="/bot/<%= bot.botId %>" style="color:var(--accent);">Detay</a>
+  </div>
+</div>

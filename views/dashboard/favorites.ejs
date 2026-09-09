@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Favorilerim</h2></div>
+    <% if (favorites.length === 0) { %>
+      <div class="empty-state">Henuz favori bot eklemedin.</div>
+    <% } else { %>
+      <div class="bot-grid">
+        <% favorites.forEach(fav => { %><%- include('../partials/bot-card', { bot: fav.bot }) %><% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

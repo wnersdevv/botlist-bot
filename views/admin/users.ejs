@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Kullanici Yonetimi</h2></div>
+    <form action="/admin/users" method="GET" style="margin-bottom:16px;max-width:320px;">
+      <input class="field" style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);" type="text" name="q" placeholder="Kullanici ara" value="<%= query.q || '' %>" />
+    </form>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kullanici</th><th>Rol</th><th>Durum</th><th></th></tr></thead>
+        <tbody>
+        <% users.forEach(u => { %>
+          <tr>
+            <td><%= u.username %></td>
+            <td>
+              <form action="/admin/users/<%= u._id %>/role" method="POST" style="display:flex;gap:6px;">
+                <select name="role" onchange="this.form.submit()">
+                  <% ['user','moderator','admin','owner'].forEach(r => { %>
+                    <option value="<%= r %>" <%= u.role === r ? 'selected' : '' %>><%= r %></option>
+                  <% }) %>
+                </select>
+              </form>
+            </td>
+            <td><%= u.banned ? 'Askiya alindi' : 'Aktif' %></td>
+            <td>
+              <% if (u.banned) { %>
+                <form action="/admin/users/<%= u._id %>/unban" method="POST"><button class="btn btn-sm btn-outline" type="submit">Askiyi Kaldir</button></form>
+              <% } else { %>
+                <form action="/admin/users/<%= u._id %>/ban" method="POST" onsubmit="return confirm('Kullanici askiya alinsin mi?');"><button class="btn btn-sm btn-danger" type="submit">Askiya Al</button></form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <%- include('../partials/pagination', { meta, query }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Bot Yonetimi</h2>
+      <div style="display:flex;gap:12px;">
+        <a href="/admin/bots?status=pending">Bekleyen</a>
+        <a href="/admin/bots?status=approved">Onayli</a>
+        <a href="/admin/bots?status=rejected">Reddedilen</a>
+        <a href="/admin/bots?status=suspended">Askiya Alinan</a>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bot</th><th>Sahip</th><th>Kategori</th><th>Durum</th><th></th></tr></thead>
+        <tbody>
+        <% bots.forEach(bot => { %>
+          <tr>
+            <td><a href="/bot/<%= bot.botId %>" style="color:var(--accent);"><%= bot.name %></a></td>
+            <td><%= bot.ownerId ? bot.ownerId.username : '-' %></td>
+            <td><%= bot.category ? bot.category.name : '-' %></td>
+            <td><span class="status-pill status-<%= bot.status %>"><%= bot.status %></span></td>
+            <td style="display:flex;gap:6px;">
+              <% if (bot.status === 'pending') { %>
+                <form action="/admin/bots/<%= bot._id %>/approve" method="POST"><button class="btn btn-sm btn-primary" type="submit">Onayla</button></form>
+                <form action="/admin/bots/<%= bot._id %>/reject" method="POST"><button class="btn btn-sm btn-outline" type="submit">Reddet</button></form>
+              <% } %>
+              <% if (bot.status === 'approved') { %>
+                <form action="/admin/bots/<%= bot._id %>/suspend" method="POST"><button class="btn btn-sm btn-outline" type="submit">Askiya Al</button></form>
+              <% } %>
+              <form action="/admin/bots/<%= bot._id %>/delete" method="POST" onsubmit="return confirm('Silinsin mi?');"><button class="btn btn-sm btn-danger" type="submit">Sil</button></form>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <%- include('../partials/pagination', { meta, query: { status } }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

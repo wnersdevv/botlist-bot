@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Sistem Loglari</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Islem</th><th>Yapan</th><th>Hedef Turu</th><th>Hedef</th><th>Tarih</th></tr></thead>
+        <tbody>
+        <% logs.forEach(log => { %>
+          <tr>
+            <td><%= log.action %></td>
+            <td><%= log.actor ? log.actor.username : '-' %></td>
+            <td><%= log.targetType || '-' %></td>
+            <td><%= log.target || '-' %></td>
+            <td><%= log.createdAt.toLocaleString('tr-TR') %></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <%- include('../partials/pagination', { meta, query: {} }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

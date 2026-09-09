@@ -1,0 +1,28 @@
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><%= site.name.slice(0, -3) %><span><%= site.name.slice(-3) %></span></a>
+    <nav class="nav-links">
+      <a href="/bots">Botlar</a>
+      <a href="/bots/top">En Cok Oy Alan</a>
+      <a href="/bots/trending">Yukselen</a>
+      <a href="/bots/new">Yeni</a>
+    </nav>
+    <div class="nav-right">
+      <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <a href="/bots/submit" class="btn btn-outline btn-sm">Bot Ekle</a>
+        <a href="/dashboard" class="user-chip">
+          <img src="<%= currentUser.avatar ? `https://cdn.discordapp.com/avatars/${currentUser.discordId}/${currentUser.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png` %>" alt="" />
+          <%= currentUser.username %>
+        </a>
+        <% if (currentUser.role !== 'user') { %>
+          <a href="/admin" class="btn btn-outline btn-sm">Admin</a>
+        <% } %>
+        <form action="/auth/logout" method="POST" style="margin:0;">
+          <button class="btn btn-sm" style="background:transparent;color:var(--text-muted);border:none;cursor:pointer;">Cikis</button>
+        </form>
+      <% } else { %>
+        <a href="/auth/discord" class="btn btn-primary btn-sm">Discord ile Giris</a>
+      <% } %>
+    </div>
+  </div>
+</header>

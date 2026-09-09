@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <form class="search-bar" style="max-width:520px;margin-bottom:28px;" action="/bots/search" method="GET">
+      <input type="text" name="q" value="<%= query.q || '' %>" placeholder="Bot ara..." />
+      <button class="btn btn-primary" type="submit">Ara</button>
+    </form>
+    <div class="section-head"><h2>"<%= query.q || '' %>" icin sonuclar</h2></div>
+    <% if (bots.length === 0) { %>
+      <div class="empty-state">Aramanla eslesen bir bot bulunamadi.</div>
+    <% } else { %>
+      <div class="bot-grid">
+        <% bots.forEach(bot => { %><%- include('../partials/bot-card', { bot }) %><% }) %>
+      </div>
+      <%- include('../partials/pagination', { meta, query }) %>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

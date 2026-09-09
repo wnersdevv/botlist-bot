@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Kategoriler</h2></div>
+    <form class="form-card" style="padding:16px;margin-bottom:20px;" action="/admin/categories" method="POST">
+      <div class="field"><label>Ad</label><input type="text" name="name" required /></div>
+      <div class="field"><label>Aciklama</label><input type="text" name="description" /></div>
+      <button class="btn btn-primary" type="submit">Ekle</button>
+    </form>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ad</th><th>Bot Sayisi</th><th></th></tr></thead>
+        <tbody>
+        <% categories.forEach(cat => { %>
+          <tr>
+            <td><%= cat.name %></td>
+            <td><%= cat.botCount %></td>
+            <td><form action="/admin/categories/<%= cat._id %>/delete" method="POST" onsubmit="return confirm('Silinsin mi?');"><button class="btn btn-sm btn-danger" type="submit">Sil</button></form></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Admin Paneli</h2></div>
+    <div class="stat-grid">
+      <div class="stat-card"><span>Toplam Kullanici</span><strong><%= stats.totalUsers %></strong></div>
+      <div class="stat-card"><span>Toplam Bot</span><strong><%= stats.totalBots %></strong></div>
+      <div class="stat-card"><span>Dogrulanmis Bot</span><strong><%= stats.verifiedBots %></strong></div>
+      <div class="stat-card"><span>Bekleyen Bot</span><strong><%= stats.pendingBots %></strong></div>
+      <div class="stat-card"><span>Askiya Alinmis</span><strong><%= stats.suspendedBots %></strong></div>
+      <div class="stat-card"><span>Toplam Oy</span><strong><%= stats.totalVotes %></strong></div>
+      <div class="stat-card"><span>Bugunku Oy</span><strong><%= stats.votesToday %></strong></div>
+      <div class="stat-card"><span>Toplam Yorum</span><strong><%= stats.totalReviews %></strong></div>
+      <div class="stat-card"><span>Bekleyen Rapor</span><strong><%= stats.openReports %></strong></div>
+    </div>
+
+    <div style="display:flex;gap:14px;margin:26px 0;">
+      <a class="btn btn-outline btn-sm" href="/admin/bots">Bot Yonetimi</a>
+      <a class="btn btn-outline btn-sm" href="/admin/users">Kullanicilar</a>
+      <a class="btn btn-outline btn-sm" href="/admin/reports">Raporlar</a>
+      <a class="btn btn-outline btn-sm" href="/admin/categories">Kategoriler</a>
+      <a class="btn btn-outline btn-sm" href="/admin/tags">Etiketler</a>
+      <a class="btn btn-outline btn-sm" href="/admin/settings">Ayarlar</a>
+      <a class="btn btn-outline btn-sm" href="/admin/logs">Loglar</a>
+    </div>
+
+    <h3 style="margin-bottom:12px;">Son Islemler</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Islem</th><th>Yapan</th><th>Hedef</th><th>Tarih</th></tr></thead>
+        <tbody>
+        <% recentLogs.forEach(log => { %>
+          <tr>
+            <td><%= log.action %></td>
+            <td><%= log.actor ? log.actor.username : '-' %></td>
+            <td><%= log.target || '-' %></td>
+            <td><%= log.createdAt.toLocaleString('tr-TR') %></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2><%= title %></h2>
+      <div style="display:flex;gap:14px;">
+        <a href="/bots/top" style="color:<%= activeTab === 'top' ? 'var(--accent)' : 'var(--text-muted)' %>">En Cok Oy</a>
+        <a href="/bots/trending" style="color:<%= activeTab === 'trending' ? 'var(--accent)' : 'var(--text-muted)' %>">Yukselen</a>
+        <a href="/bots/new" style="color:<%= activeTab === 'new' ? 'var(--accent)' : 'var(--text-muted)' %>">Yeni</a>
+      </div>
+    </div>
+    <div class="bot-grid">
+      <% bots.forEach(bot => { %><%- include('../partials/bot-card', { bot }) %><% }) %>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>

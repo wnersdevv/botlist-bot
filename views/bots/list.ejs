@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><%- include('../partials/head') %></head>
+<body>
+<%- include('../partials/nav') %>
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>Botlar</h2></div>
+    <% if (bots.length === 0) { %>
+      <div class="empty-state">Bu filtrelere uyan bot bulunamadi.</div>
+    <% } else { %>
+      <div class="bot-grid">
+        <% bots.forEach(bot => { %><%- include('../partials/bot-card', { bot }) %><% }) %>
+      </div>
+      <%- include('../partials/pagination', { meta, query }) %>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
+</body>
+</html>
